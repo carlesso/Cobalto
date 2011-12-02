@@ -1,0 +1,47 @@
+%h1
+  Benvenuto #{@user.fullname}
+
+- if @too_many_sms
+  .alert-message.error
+    Hai superato il numero massimo di sms da inviarti. Se hai problemi
+    = mail_to "contattaci", "admin@seiconnesso.org"
+
+
+- if @user.activated?
+  %p
+    Il tuo account ci risulta correttamente attivato!
+  %p
+    L'username che ti é stato assegnato é:
+    = @user.username
+- else
+  %p
+    Abbiamo inviato un sms al numero di telefono specificato in fase di registrazione.
+  %p
+    Inserisci il codice che ti abbiamo inviato!
+  %p
+    Il messaggio ci risulta
+    - if @user.sms.order('created_at desc').first.processed?
+      %span.label.success
+        inviato
+      %br
+      Non ti é arrivato?
+      = link_to "Inviami un nuovo codice!", resend_code_user_path(@user), :confirm => "Sei sicuro di voler reinviare il messaggio?"
+    - else
+      %span.label.warning
+        non inviato
+      %br
+
+      = link_to "Invia nuovo codice?", resend_code_user_path(@user), :confirm => "Sei sicuro di voler reinviare il messaggio?"
+
+  = form_for @user, :url => {:action => :activate} do |f|
+    .clearfix{:class => @error ? 'error': ''}
+      = f.label :code_check, "Codice di conferma"
+      .input
+        = f.text_field :code_check
+        - if @error
+          %span
+            Il codice di conferma é sbagliato! Vuoi
+            = link_to "riceverlo di nuovo", resend_code_user_path(@user), :confirm => "Sei sicuro di voler reinviare il messaggio?"
+            ?
+    .actions
+      = f.submit "Attivami!", :class => "btn primary"

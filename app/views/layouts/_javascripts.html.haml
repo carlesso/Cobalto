@@ -1,0 +1,9 @@
+= javascript_include_tag "https://www.google.com/jsapi?key=ABQIAAAAkd1KFfmnHiPmH0ju1zSbeBTH4zvRnwL90Yjs__-Zex_m01-F1hRzSAvW813yzSOJTcJCmGikLO5O_A"
+
+:javascript
+  google.load("jquery", "1.6.2");
+  google.load("jqueryui", "1.8.14");
+
+= javascript_include_tag "application"
+
+= yield :javascripts

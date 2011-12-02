@@ -1,0 +1,27 @@
+# encoding: utf-8
+
+it:
+  activerecord:
+    attributes:
+      user:
+        shared_pwd: Password
+        shared_pwd_confirmation: Conferma Password
+    errors:
+      models:
+        user:
+          attributes:
+            privacy:
+              accepted: devi accettare il termini di trattamento della privacy
+            phone:
+              taken: risulta già registrato
+            email:
+              blank: non può essere vuota
+              taken: risulta già registrata nei nostri archivi
+            password:
+              blank: non può essere vuota
+            name:
+              too_short: il nome è troppo corto
+            surname:
+              too_short: il cognome è troppo corto
+            shared_pwd:
+              too_short: é troppo corta

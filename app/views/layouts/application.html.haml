@@ -1,0 +1,32 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}/
+    %title
+      = yield :title
+      | Cobalto Projetct
+    = stylesheet_link_tag "application"
+    = csrf_meta_tags
+    %meta{:content => "", :name => "description"}/
+    %meta{:content => "", :name => "author"}/
+    / Le HTML5 shim, for IE6-8 support of HTML elements
+    /[if lt IE 9]
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    :css
+      body {
+        padding-top: 60px;
+      }
+  %body
+    .topbar
+      = render 'layouts/nav'
+    .container
+      .content
+        - flash.each do |name, msg|
+          .alert-message{:class=>"#{name} fade in"}
+            = link_to "x", "#", :class => "close"
+            = content_tag :p, msg, :id => "flash_#{name}"
+        = yield
+      %footer
+        = render 'layouts/footer'
+      #fb-root
+      = render 'layouts/javascripts'

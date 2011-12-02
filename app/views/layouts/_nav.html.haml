@@ -1,0 +1,11 @@
+.topbar-inner.fill#topbar
+  .container
+    = link_to "Cobalto", root_url, :class => "brand"
+    %p.pull-right
+      - if current_user
+        Logged in as
+        = link_to current_user.email, current_user
+        = link_to "Logout", destroy_user_session_path, :method => :delete
+      - else
+        = link_to "Login", new_user_session_path
+

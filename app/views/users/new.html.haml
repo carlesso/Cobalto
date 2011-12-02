@@ -1,0 +1,60 @@
+%h1
+  Nuova registrazione
+
+- if @user.errors.any?
+  .alert-message.block-message.error
+    %h2
+      - if @user.errors.count == 1
+        È stato riscontrato un errore
+      - else
+        Sono stati riscontrati #{@user.errors.count} errori
+    %ul
+      - @user.errors.full_messages.each do |msg|
+        %li
+          = msg
+
+
+
+= form_for @user do |f|
+  .clearfix{:class => @user.errors.keys.include?(:name) ? 'error': ''}
+    = f.label :name, "Nome"
+    .input
+      = f.text_field :name
+  .clearfix{:class => @user.errors.keys.include?(:surname) ? 'error': ''}
+    = f.label :surname, "Cognome"
+    .input
+      = f.text_field :surname
+  .clearfix{:class => @user.errors.keys.include?(:email) ? 'error': ''}
+    = f.label :email, "email"
+    .input
+      = f.text_field :email
+      %span.help-inline
+        Deve essere un'email valida e non già presente nei nostri archivi
+  .clearfix{:class => @user.errors.keys.include?(:phone) ? 'error': ''}
+    = f.label :phone, "N. telefono"
+    .input
+      = f.text_field :phone
+      %span.help-inline
+        Deve essere un numero italiano. Ogni carattere diverso o spazio verranno eliminati
+  .clearfix{:class => @user.errors.keys.include?(:shared_pwd) ? 'error': ''}
+    = f.label :shared_pwd, "Password"
+    .input
+      = f.text_field :shared_pwd, :type => :password
+      %span.help-inline
+        Deve essere di almeno otto caretteri
+  .clearfix{:class => @user.errors.keys.include?(:shared_pwd_confirmation) ? 'error': ''}
+    = f.label :shared_pwd_confirmation, "Conferma Password"
+    .input
+      = f.text_field :shared_pwd_confirmation, :type => :password
+      %span.help-inline
+        Conferma della password inserita
+  .clearfix
+    .input
+      %ul.inputs-list
+        %li
+          %label
+            = f.check_box :privacy
+            %span
+              Acconsenti al trattamento dei tuoi dati personali in rispetto al decreto legislativo 196/03?
+  .actions
+    = f.submit "Save", :class => "btn primary"
